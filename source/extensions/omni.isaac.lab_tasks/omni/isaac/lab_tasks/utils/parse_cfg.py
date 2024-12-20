@@ -186,7 +186,7 @@ def get_checkpoint_path(
         raise ValueError(f"No runs present in the directory: '{log_path}' match: '{run_dir}'.")
 
     # list all model checkpoints in the directory
-    model_checkpoints = [f for f in os.listdir(run_path) if re.match(checkpoint, f)]
+    model_checkpoints = [f for f in os.listdir(run_path) if f in checkpoint]
     # check if any checkpoints are present
     if len(model_checkpoints) == 0:
         raise ValueError(f"No checkpoints in the directory: '{run_path}' match '{checkpoint}'.")

@@ -25,7 +25,7 @@ export ISAACLAB_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && p
 # extract isaac sim path
 extract_isaacsim_path() {
     # Use the sym-link path to Isaac Sim directory
-    local isaac_path=${ISAACLAB_PATH}/_isaac_sim
+    local isaac_path=${ISAACLAB_PATH}/..
     # If above path is not available, try to find the path using python
     if [ ! -d "${isaac_path}" ]; then
         # Use the python executable to get the path
@@ -42,7 +42,7 @@ extract_isaacsim_path() {
         echo -e "\tThis could be due to the following reasons:" >&2
         echo -e "\t1. Conda environment is not activated." >&2
         echo -e "\t2. Isaac Sim pip package 'isaacsim-rl' is not installed." >&2
-        echo -e "\t3. Isaac Sim directory is not available at the default path: ${ISAACLAB_PATH}/_isaac_sim" >&2
+        echo -e "\t3. Isaac Sim directory is not available at the default path: ${ISAACLAB_PATH}/.." >&2
         # exit the script
         exit 1
     fi
@@ -58,7 +58,7 @@ extract_python_exe() {
         local python_exe=${CONDA_PREFIX}/bin/python
     else
         # use kit python
-        local python_exe=${ISAACLAB_PATH}/_isaac_sim/python.sh
+        local python_exe=${ISAACLAB_PATH}/../python.sh
 
     if [ ! -f "${python_exe}" ]; then
             # note: we need to check system python for cases such as docker
@@ -75,7 +75,7 @@ extract_python_exe() {
         echo -e "\tThis could be due to the following reasons:" >&2
         echo -e "\t1. Conda environment is not activated." >&2
         echo -e "\t2. Isaac Sim pip package 'isaacsim-rl' is not installed." >&2
-        echo -e "\t3. Python executable is not available at the default path: ${ISAACLAB_PATH}/_isaac_sim/python.sh" >&2
+        echo -e "\t3. Python executable is not available at the default path: ${ISAACLAB_PATH}/../python.sh" >&2
         exit 1
     fi
     # return the result
@@ -156,9 +156,9 @@ setup_conda_env() {
         'export RESOURCE_NAME="IsaacSim"' \
         '' > ${CONDA_PREFIX}/etc/conda/activate.d/setenv.sh
 
-    # check if we have _isaac_sim directory -> if so that means binaries were installed.
+    # check if we have .. directory -> if so that means binaries were installed.
     # we need to setup conda variables to load the binaries
-    local isaacsim_setup_conda_env_script=${ISAACLAB_PATH}/_isaac_sim/setup_conda_env.sh
+    local isaacsim_setup_conda_env_script=${ISAACLAB_PATH}/../setup_conda_env.sh
 
     if [ -f "${isaacsim_setup_conda_env_script}" ]; then
         # add variables to environment during activation
@@ -186,7 +186,7 @@ setup_conda_env() {
         'unset RESOURCE_NAME' \
         '' > ${CONDA_PREFIX}/etc/conda/deactivate.d/unsetenv.sh
 
-    # check if we have _isaac_sim directory -> if so that means binaries were installed.
+    # check if we have .. directory -> if so that means binaries were installed.
     if [ -f "${isaacsim_setup_conda_env_script}" ]; then
         # add variables to environment during activation
         printf '%s\n' \

@@ -15,7 +15,7 @@ rem Helper functions
 rem extract Isaac Sim directory
 :extract_isaacsim_path
 rem Use the sym-link path to Isaac Sim directory
-set isaac_path=%ISAACLAB_PATH%\_isaac_sim
+set isaac_path=%ISAACLAB_PATH%\..
 rem Check if directory exists
 if not exist "%isaac_path%" (
     rem Find the Python executable
@@ -33,7 +33,7 @@ if not exist "%isaac_path%" (
     echo [ERROR] Unable to find the Isaac Sim directory: %isaac_path%
     echo %tab%This could be due to the following reasons:
     echo %tab%1. Conda environment with Isaac Sim pip package is not activated.
-    echo %tab%2. Isaac Sim directory is not available at the default path: %ISAACLAB_PATH%\_isaac_sim
+    echo %tab%2. Isaac Sim directory is not available at the default path: %ISAACLAB_PATH%\..
     exit /b 1
 )
 goto :eof
@@ -46,7 +46,7 @@ if not "%CONDA_PREFIX%"=="" (
     set python_exe=%CONDA_PREFIX%\python.exe
 ) else (
     rem use kit python
-    set python_exe=%ISAACLAB_PATH%\_isaac_sim\python.bat
+    set python_exe=%ISAACLAB_PATH%\..\python.bat
 )
 rem check for if isaac sim was installed to system python
 if not exist "%python_exe%" (
@@ -64,7 +64,7 @@ if not exist "%python_exe%" (
     echo [ERROR] Unable to find any Python executable at path: %python_exe%
     echo %tab%This could be due to the following reasons:
     echo %tab%1. Conda environment is not activated.
-    echo %tab%2. Python executable is not available at the default path: %ISAACLAB_PATH%\_isaac_sim\python.bat
+    echo %tab%2. Python executable is not available at the default path: %ISAACLAB_PATH%\..\python.bat
     exit /b 1
 )
 goto :eof
